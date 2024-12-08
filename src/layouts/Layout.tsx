@@ -4,7 +4,7 @@ import { Outlet } from "react-router";
 const Layout = () => {
   return (
     <div className="">
-      <div className="m-10 ">
+      <div className="my-10">
         <Outlet />
       </div>
     </div>

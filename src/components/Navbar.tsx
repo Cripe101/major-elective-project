@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 const Navbar = () => {
   const navigate = useNavigate();
   return (
-    <div className="flex justify-between py-4 border-b gap-5">
+    <div className="flex justify-between py-3 border-b fixed top-0 left-0 z-50 w-full bg-white">
       <section>
         <h1
           onClick={() => {
@@ -35,7 +35,7 @@ const Navbar = () => {
           Profile
         </button>
 
-        <a href="/login" className="py-5">
+        <a href="/login" className="py-3">
           <button className="text-Base font-bold hover:scale-105 hover:text-red-600 duration-200">
             Logout
           </button>
