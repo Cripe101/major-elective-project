@@ -1,0 +1,53 @@
+{
+  "users": [
+    {
+      "id": "mhegz",
+      "password": "$2a$10$VBJnZu62N8rTjUYopYLb0.pBrdm7/Jhn3u4NrXszl/ngExoR4Xwm6",
+      "newPassword": "",
+      "confirmPassword": "Mhegz1008",
+      "firstName": "Mheg Ryan",
+      "middleName": "Tolibao",
+      "lastName": "Limpangog",
+      "email": "mhegryanlimpangog@gmail.com",
+      "phoneNum": "09317619652",
+      "open": true
+    }
+  ],
+  "students": [
+    {
+      "id": "",
+      "firstName": "Mheg Ryan",
+      "middleName": "Tolibao",
+      "lastName": "Limpangog",
+      "email": "mhegryanlimpangog58@gmail.com"
+    },
+    {
+      "id": "",
+      "firstName": "Mheg Alley",
+      "middleName": "Tolibao",
+      "lastName": "Limpangog",
+      "email": "macalley12@gmail.com"
+    },
+    {
+      "id": "43b9",
+      "firstName": "Jarod",
+      "middleName": "Mauring",
+      "lastName": "Melecio",
+      "email": "jarodmelecio@gmail.com"
+    },
+    {
+      "id": "2240",
+      "firstName": "Mac Alley",
+      "middleName": "Tolibao",
+      "lastName": "Limpangog",
+      "email": "macalley12@gmail.com"
+    },
+    {
+      "id": "331f",
+      "firstName": "Mac Alley",
+      "middleName": "Tolibao",
+      "lastName": "Limpangog",
+      "email": "macalley12@gmail.com"
+    }
+  ]
+}
