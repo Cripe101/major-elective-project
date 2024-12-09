@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import Students from "../components/Students";
+import Students from "../components/students/Students";
 
 const Home = () => {
   const navigate = useNavigate();

@@ -10,6 +10,8 @@ interface AppState {
   email: string;
   phoneNum: string;
   open: boolean;
+  open2: boolean;
+  open3: boolean;
 }
 
 export const usersData = proxy<AppState>({
@@ -23,4 +25,6 @@ export const usersData = proxy<AppState>({
   email: "",
   phoneNum: "",
   open: true,
+  open2: true,
+  open3: true,
 });

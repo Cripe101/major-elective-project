@@ -1,17 +1,59 @@
 import { useSnapshot } from "valtio";
-import { studentData } from "../store/StudentData";
+import { studentData } from "../../store/StudentData";
 import AddStudents from "./AddStudents";
-import { usersData } from "../store/UsersData";
+import { usersData } from "../../store/UsersData";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { randomUUID } from "crypto";
+import UpdateStudents from "./UpdateStudents";
+import ViewStudents from "./ViewStudents";
 
 const Students = () => {
   const [students, setStudents] = useState<(typeof studentData)[]>();
+  const [fetchStudent, setFetchStudent] = useState<typeof studentData>();
   const student = useSnapshot(studentData);
   const open = useSnapshot(usersData);
-  let { id } = useParams();
+  let { id } = useParams<string>();
   const navigate = useNavigate();
+  const snap = useSnapshot(studentData);
+
+  const handleUpdate = async () => {
+    console.log(id);
+    const updatedStudents = {
+      lastName: studentData.lastName,
+      firstName: studentData.firstName,
+      middleName: studentData.middleName,
+      email: studentData.email,
+    };
+    console.log(updatedStudents, "Hello, its updated students");
+    const res = await fetch("http://localhost:8000/students/" + snap.id, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatedStudents),
+    });
+    if (res.ok) {
+      alert("Successfully Updated Student");
+    } else {
+      alert("Error Occured");
+    }
+  };
+
+  const fetchStudents = () => {
+    fetch("http://localhost:8000/students/" + id)
+      .then((res) => {
+        return res.json();
+      })
+      .then((resp) => {
+        studentData.lastName = resp?.lastName;
+        studentData.firstName = resp?.firstName;
+        studentData.middleName = resp?.middleName;
+        studentData.email = resp?.email;
+        // console.log(resp?.lastName + "Hello, Its Fetch");
+      })
+      .catch((err) => {
+        alert("An Error Occured : " + err.message);
+      });
+  };
 
   const handleDelete = async () => {
     const res = await fetch("http://localhost:8000/students/" + id, {
@@ -20,7 +62,7 @@ const Students = () => {
     if (res.ok) {
       alert("Successfully Deleted Student");
     } else {
-      alert("Error");
+      alert("Error Occured");
     }
   };
 
@@ -31,6 +73,11 @@ const Students = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(studentData),
     });
+    if (res.ok) {
+      alert("Successfully Added Student");
+    } else {
+      alert("Error Occured");
+    }
   };
 
   useEffect(() => {
@@ -40,8 +87,8 @@ const Students = () => {
       })
       .then((resp) => {
         setStudents(resp);
-        console.log(resp);
-        console.log(student, " Student");
+        // console.log(resp);
+        // console.log(student, " Student");
       })
       .catch(() => {
         alert("Failed to fetch Students");
@@ -98,6 +145,12 @@ const Students = () => {
                 <section className="flex py-2">
                   <button
                     type="button"
+                    onClick={() => {
+                      id = student?.id;
+                      studentData.id = student?.id;
+                      usersData.open2 = false;
+                      fetchStudents();
+                    }}
                     className="p-1 text-slate-50 rounded-md font-bold hover:cursor-pointer w-[90px] ml-1 bg-gradient-to-b from-green-400 to-green-500  hover:from-red-400 hover:scale-105 hover:to-red-500 active:shadow duration-200 shadow-md"
                   >
                     Update
@@ -113,6 +166,11 @@ const Students = () => {
                     Delete
                   </button>
                   <button
+                    onClick={() => {
+                      id = student?.id;
+                      usersData.open3 = false;
+                      fetchStudents();
+                    }}
                     type="button"
                     className="p-1 text-slate-50 rounded-md font-bold hover:cursor-pointer w-[90px] ml-1 bg-gradient-to-b from-green-500 to-green-400  hover:from-green-400 hover:scale-105 hover:to-green-500 active:shadow duration-200 shadow-md"
                   >
@@ -122,13 +180,16 @@ const Students = () => {
               </form>
             ))}
           </span>
+
+          {/* Add Students */}
+
           <form
             onSubmit={handleSubmit}
             className={`${
               open.open
                 ? "opacity-0 w-0 left-0 top-1/2"
                 : "w-[400px] opacity-100"
-            } bg-red-50 p-10 rounded-md shadow-md flex flex-col absolute items-center overflow-hidden`}
+            } bg-red-50 p-10 rounded-md border shadow-md flex flex-col absolute items-center overflow-hidden`}
           >
             <section className="flex justify-between w-[100%] items-center">
               <h1 className="font-bold pb-7 text-lg text-center">
@@ -151,6 +212,69 @@ const Students = () => {
             >
               Add
             </button>
+          </form>
+
+          {/* Update Students */}
+
+          <form
+            onSubmit={handleUpdate}
+            className={`${
+              open.open2
+                ? "opacity-0 w-0 left-0 top-1/2"
+                : "w-[400px] opacity-100"
+            } bg-red-50 p-10 rounded-md border shadow-md flex flex-col absolute items-center overflow-hidden`}
+          >
+            <section className="flex justify-between w-[100%] items-center">
+              <h1 className="font-bold pb-7 text-lg text-center">
+                Update Student
+              </h1>
+              <button
+                type="button"
+                onClick={() => {
+                  studentData.lastName = "";
+                  studentData.firstName = "";
+                  studentData.middleName = "";
+                  studentData.email = "";
+                  usersData.open2 = true;
+                }}
+                className="mb-7 font-bold py-1 px-3 rounded-md hover:text-red-500 duration-200 hover:bg-red-100"
+              >
+                X
+              </button>
+            </section>
+            <UpdateStudents />
+            <button
+              type="submit"
+              className="p-1 text-slate-50 mt-5 rounded-md font-bold hover:cursor-pointer w-[68%] bg-gradient-to-b from-red-500 to-red-400  hover:from-green-300 hover:to-green-500 active:shadow duration-200 shadow-md"
+            >
+              Update
+            </button>
+          </form>
+
+          {/* View Students */}
+
+          <form
+            className={`${
+              open.open3
+                ? "opacity-0 w-0 left-0 top-1/2"
+                : "w-[400px] opacity-100"
+            } bg-red-50 p-10 rounded-md border shadow-md flex flex-col absolute items-center overflow-hidden`}
+          >
+            <section className="flex justify-between w-[100%] items-center">
+              <h1 className="font-bold pb-7 text-lg text-center">
+                Student Info
+              </h1>
+              <button
+                type="submit"
+                onClick={() => {
+                  usersData.open3 = true;
+                }}
+                className="mb-7 font-bold py-1 px-3 rounded-md hover:text-red-500 duration-200 hover:bg-red-100"
+              >
+                X
+              </button>
+            </section>
+            <ViewStudents />
           </form>
         </div>
       </div>
