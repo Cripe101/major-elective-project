@@ -7,9 +7,15 @@ const Profile = () => {
   const [users, setUsers] = useState<typeof usersData>();
   const snap = useSnapshot(usersData);
   const navigate = useNavigate();
+  const userName = sessionStorage.getItem("userName");
 
   useEffect(() => {
-    fetch("http://localhost:8000/users/" + snap.id)
+    if (!userName) {
+      navigate("/login");
+      return;
+    }
+
+    fetch("http://localhost:8000/users/" + userName)
       .then((res) => {
         return res.json();
       })

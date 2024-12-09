@@ -11,19 +11,26 @@
       "email": "mhegryanlimpangog@gmail.com",
       "phoneNum": "09317619652",
       "open": true
+    },
+    {
+      "id": "cripe101",
+      "password": "$2a$10$ftnZc3XPR5i6w95dVS215ucaFw591JpdoJSQk8Tznl4DfiBuP2V5y",
+      "newPassword": "",
+      "confirmPassword": "Cripe1008",
+      "firstName": "Cripe",
+      "middleName": "Tolibao",
+      "lastName": "Limpangog",
+      "email": "cripeguild1001.1001@gmail.com",
+      "phoneNum": "09317619652",
+      "open": true,
+      "open2": true,
+      "open3": true
     }
   ],
   "students": [
     {
-      "id": "0.12609896183694436",
-      "firstName": "Jarod",
-      "middleName": "Mauring",
-      "lastName": "Melecio",
-      "email": "me2@gmail.com"
-    },
-    {
       "id": "0.2857396806096075",
-      "firstName": "Mheg Ryan",
+      "firstName": "Mheg",
       "middleName": "Tolibao",
       "lastName": "Limpangog",
       "email": "mhegryanlimpangog58@gmail.com"

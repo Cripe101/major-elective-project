@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router";
+import { usersData } from "../store/UsersData";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const userName = sessionStorage.getItem("userName");
   return (
     <div className="flex justify-between py-3 border-b fixed top-0 left-0 z-50 w-full bg-white">
       <section>
@@ -35,11 +37,18 @@ const Navbar = () => {
           Profile
         </button>
 
-        <a href="/login" className="py-3">
-          <button className="text-Base font-bold hover:scale-105 hover:text-red-600 duration-200">
-            Logout
-          </button>
-        </a>
+        <button
+          onClick={() => {
+            sessionStorage.removeItem("userName");
+            usersData.id = "";
+            usersData.password = "";
+            navigate("/login");
+          }}
+          type="button"
+          className="text-Base font-bold hover:scale-105 hover:text-red-600 duration-200"
+        >
+          Logout
+        </button>
 
         {/* <button
           onClick={() => {

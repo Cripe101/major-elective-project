@@ -6,7 +6,7 @@ import Layout from "./layouts/Layout";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
-import UpdateProfile from "./components/TestProfile";
+import UpdateProfile from "./components/UpdateProfile";
 
 const router = createBrowserRouter([
   {

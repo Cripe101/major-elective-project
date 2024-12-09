@@ -4,15 +4,15 @@ import Students from "../components/students/Students";
 
 const Home = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState<any>();
 
+  const userName = sessionStorage.getItem("userName");
   useEffect(() => {
-    let userName = sessionStorage.getItem("userName");
-    setUser(userName);
-    if (userName === "" || userName === null) {
+    if (!userName) {
       navigate("/login");
+      return;
     }
   }, []);
+
   return (
     <div>
       <Students />

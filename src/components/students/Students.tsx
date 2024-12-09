@@ -10,7 +10,8 @@ import ViewStudents from "./ViewStudents";
 const Students = () => {
   const [students, setStudents] = useState<(typeof studentData)[]>();
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredStudents, setFilteredStudents] = useState<(typeof studentData)[]>();
+  const [filteredStudents, setFilteredStudents] =
+    useState<(typeof studentData)[]>();
   const student = useSnapshot(studentData);
   const open = useSnapshot(usersData);
   let { id } = useParams<string>();
@@ -81,15 +82,16 @@ const Students = () => {
 
   const handleSearch = () => {
     if (!students) return;
-    
+
     const filtered = students.filter((student) => {
-      const fullName = `${student.lastName} ${student.firstName} ${student.middleName}`.toLowerCase();
+      const fullName =
+        `${student.lastName} ${student.firstName} ${student.middleName}`.toLowerCase();
       const email = student.email.toLowerCase();
       const search = searchTerm.toLowerCase();
-      
+
       return fullName.includes(search) || email.includes(search);
     });
-    
+
     setFilteredStudents(filtered);
   };
 
@@ -132,9 +134,10 @@ const Students = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="p-1 w-[150px] rounded-l-md border-2 border-black text-center"
               />
-              <button 
+              <button
                 onClick={handleSearch}
-                className="p-1 border-2 border-black bg-black font-bold text-white rounded-r-md hover:text-green-200 duration-200">
+                className="p-1 border-2 border-black bg-black font-bold text-white rounded-r-md hover:text-green-200 duration-200"
+              >
                 Search
               </button>
             </section>
@@ -169,7 +172,7 @@ const Students = () => {
                       usersData.open2 = false;
                       fetchStudents();
                     }}
-                    className="px-3 py-1 bg-green-400 text-white font-bold rounded-md hover:bg-green-500 duration-200 mx-1"
+                    className="px-3 py-1 bg-green-400 shadow-md text-white font-bold rounded-md hover:bg-green-500 duration-200 mx-1"
                   >
                     Update
                   </button>
@@ -179,7 +182,7 @@ const Students = () => {
                       id = student?.id;
                       handleDelete();
                     }}
-                    className="px-3 py-1 bg-red-400 text-white font-bold rounded-md hover:bg-red-500 duration-200 mx-1"
+                    className="px-3 py-1 bg-red-400 shadow-md text-white font-bold rounded-md hover:bg-red-500 duration-200 mx-1"
                   >
                     Delete
                   </button>
@@ -190,7 +193,7 @@ const Students = () => {
                       fetchStudents();
                     }}
                     type="button"
-                    className="px-3 py-1 bg-green-400 text-white font-bold rounded-md hover:bg-green-500 duration-200 mx-1"
+                    className="px-3 py-1 bg-green-400 shadow-md text-white font-bold rounded-md hover:bg-green-500 duration-200 mx-1"
                   >
                     View
                   </button>

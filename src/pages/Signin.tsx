@@ -2,11 +2,13 @@ import { useNavigate } from "react-router";
 import { useSnapshot } from "valtio";
 import { usersData } from "../store/UsersData";
 import bcrypt from "bcryptjs";
+import { useEffect } from "react";
 
 const Signin = () => {
   const snap = useSnapshot(usersData);
 
   const navigate = useNavigate();
+  // const userName = sessionStorage.getItem("userName");
 
   const proceedSignin = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -58,6 +60,12 @@ const Signin = () => {
 
     return result;
   };
+
+  // useEffect(() => {
+  //   if (!(userName === "")) {
+  //     sessionStorage.removeItem("userName");
+  //   }
+  // });
 
   return (
     <div className="flex justify-center mt-40">

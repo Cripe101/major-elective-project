@@ -13,7 +13,7 @@ const ViewStudents = () => {
         </p>
         <input
           type="text"
-          required
+          readOnly
           value={snap.lastName}
           onChange={(e) => {
             studentData.lastName = e.target.value;
@@ -27,7 +27,7 @@ const ViewStudents = () => {
         </p>
         <input
           type="text"
-          required
+          readOnly
           value={snap.firstName}
           onChange={(e) => {
             studentData.firstName = e.target.value;
@@ -41,7 +41,7 @@ const ViewStudents = () => {
         </p>
         <input
           type="text"
-          required
+          readOnly
           value={snap.middleName}
           onChange={(e) => {
             studentData.middleName = e.target.value;
@@ -55,7 +55,7 @@ const ViewStudents = () => {
         </p>
         <input
           type="email"
-          required
+          readOnly
           value={snap.email}
           onChange={(e) => {
             studentData.email = e.target.value;

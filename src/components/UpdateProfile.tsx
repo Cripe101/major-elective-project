@@ -1,103 +1,91 @@
 import React, { useEffect, useState } from "react";
-import { useSnapshot } from "valtio";
 import { usersData } from "../store/UsersData";
 import bcrypt from "bcryptjs";
-import { useNavigate } from "react-router-dom"; // Correct import for `useNavigate`
+import { useNavigate } from "react-router-dom";
+import { useSnapshot } from "valtio";
 
-const UpdateProfile2 = () => {
-  const snap = useSnapshot(usersData);
+const UpdateProfile = () => {
+  const user = useSnapshot(usersData);
   const navigate = useNavigate();
 
-  const [userData, setUserData] = useState<any>(null); // to store the fetched user data
-  const [loading, setLoading] = useState(true); // handle loading state
-
+  const [users, setUsers] = useState<typeof usersData>();
+  const [loading, setLoading] = useState(true);
   const userName = sessionStorage.getItem("userName");
 
-  // If userName is not in sessionStorage, navigate to login page.
   useEffect(() => {
     if (!userName) {
-      navigate("/login"); // redirect to login if user is not logged in
+      navigate("/login");
       return;
     }
 
-    // Fetch user data from backend by userName
-    fetch(`http://localhost:8000/users?userName=${userName}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.length > 0) {
-          const fetchedUser = data[0];
-          setUserData(fetchedUser); // Store user data in state
-          // Prepopulate the form fields from fetched user data
-          usersData.firstName = fetchedUser.firstName;
-          usersData.lastName = fetchedUser.lastName;
-          usersData.middleName = fetchedUser.middleName;
-          usersData.phoneNum = fetchedUser.phoneNum;
-          usersData.email = fetchedUser.email;
-          usersData.id = fetchedUser.id;
-          //   usersData.password = fetchedUser.password; // Assuming password is hashed
-        } else {
-          alert("User not found.");
-          navigate("/login");
-        }
-        setLoading(false); // stop loading when data is fetched
+    fetch("http://localhost:8000/users/" + userName)
+      .then((res) => {
+        return res.json();
       })
-      .catch((error) => {
-        console.error("Error fetching user data", error);
+      .then((resp) => {
+        setUsers(resp);
+        setLoading(false);
+        if (!resp.ok) {
+          usersData.lastName = resp.lastName;
+          usersData.firstName = resp.firstName;
+          usersData.middleName = resp.middleName;
+          usersData.id = resp.id;
+          usersData.email = resp.email;
+          usersData.phoneNum = resp.phoneNum;
+
+          // console.log(user.lastName);
+        }
+      })
+      .catch(() => {
         alert("Error fetching user data.");
         navigate("/login");
       });
-  }, [navigate, userName]);
+  }, []);
 
-  // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Check if userData is loaded
-    if (!userData) {
+    if (!users) {
       alert("User data not loaded yet.");
       return;
     }
 
-    // Compare old password to ensure the user is allowed to update the password
-    const match = await bcrypt.compare(snap.confirmPassword, userData.password);
+    const match = await bcrypt.compare(user.confirmPassword, users.password);
 
     if (match) {
       const saltRounds = 10;
-      const hashedPassword = await bcrypt.hash(snap.newPassword, saltRounds);
+      const hashedPassword = await bcrypt.hash(user.newPassword, saltRounds);
 
-      console.log("This the Data", userData);
-      // Create an updated user object
+      // console.log("This the Data", users);
+
       const updatedUser = {
-        ...userData,
-        id: snap.id,
-        password: hashedPassword, // Update the password
-        firstName: snap.firstName,
-        lastName: snap.lastName,
-        middleName: snap.middleName,
-        phoneNum: snap.phoneNum,
-        email: snap.email,
-        // Set the id to the userName
+        id: user.id,
+        password: hashedPassword,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        middleName: user.middleName,
+        phoneNum: user.phoneNum,
+        email: user.email,
       };
 
-      // Update the user data on the backend
-      fetch(`http://localhost:8000/users/${userData.id}`, {
-        method: "PUT", // Use PUT to update the entire user data
+      fetch(`http://localhost:8000/users/${users.id}`, {
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedUser),
       })
         .then((res) => {
           if (res.ok) {
-            alert("Profile updated successfully.");
-            sessionStorage.removeItem("userName"); // Remove session data
+            sessionStorage.removeItem("userName");
             usersData.password = "";
             usersData.id = "";
-            navigate("/login"); // Navigate to login after update
+            alert("Profile updated successfully.");
+            navigate("/login");
           } else {
             alert(`Error updating profile: ${res.status}`);
           }
         })
         .catch((err) => {
-          console.error("Error updating user", err);
+          // console.error("Error updating user", err);
           alert("An error occurred while updating the profile.");
         });
     } else {
@@ -121,7 +109,7 @@ const UpdateProfile2 = () => {
             </p>
             <input
               type="text"
-              value={snap.lastName}
+              value={user.lastName}
               required
               onChange={(e) => {
                 usersData.lastName = e.target.value;
@@ -136,7 +124,7 @@ const UpdateProfile2 = () => {
             <input
               type="text"
               required
-              value={snap.firstName}
+              value={user.firstName}
               onChange={(e) => {
                 usersData.firstName = e.target.value;
               }}
@@ -150,7 +138,7 @@ const UpdateProfile2 = () => {
             <input
               required
               type="text"
-              value={snap.middleName}
+              value={user.middleName}
               onChange={(e) => {
                 usersData.middleName = e.target.value;
               }}
@@ -165,7 +153,7 @@ const UpdateProfile2 = () => {
             </p>
             <input
               type="number"
-              value={snap.phoneNum}
+              value={user.phoneNum}
               required
               onChange={(e) => {
                 usersData.phoneNum = e.target.value;
@@ -180,7 +168,7 @@ const UpdateProfile2 = () => {
             <input
               type="text"
               required
-              value={snap.id}
+              value={user.id}
               onChange={(e) => {
                 usersData.id = e.target.value;
               }}
@@ -195,7 +183,7 @@ const UpdateProfile2 = () => {
           <input
             type="text"
             required
-            value={snap.email}
+            value={user.email}
             onChange={(e) => {
               usersData.email = e.target.value;
             }}
@@ -210,7 +198,7 @@ const UpdateProfile2 = () => {
             <input
               required
               type="password"
-              value={snap.confirmPassword}
+              value={user.confirmPassword}
               onChange={(e) => {
                 usersData.confirmPassword = e.target.value;
               }}
@@ -224,7 +212,7 @@ const UpdateProfile2 = () => {
             <input
               required
               type="password"
-              value={snap.newPassword}
+              value={user.newPassword}
               onChange={(e) => {
                 usersData.newPassword = e.target.value;
               }}
@@ -245,4 +233,4 @@ const UpdateProfile2 = () => {
   );
 };
 
-export default UpdateProfile2;
+export default UpdateProfile;
