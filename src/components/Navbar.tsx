@@ -36,6 +36,15 @@ const Navbar = () => {
         >
           Profile
         </button>
+        <button
+          onClick={() => {
+            navigate("/archived");
+          }}
+          type="button"
+          className="text-Base font-bold hover:scale-105 hover:text-red-600 duration-200"
+        >
+          Archived
+        </button>
 
         <button
           onClick={() => {
@@ -49,16 +58,6 @@ const Navbar = () => {
         >
           Logout
         </button>
-
-        {/* <button
-          onClick={() => {
-            navigate("/");
-          }}
-          type="submit"
-          className="text-Base font-bold hover:scale-105 hover:text-red-600 duration-200"
-        >
-          Logout
-        </button> */}
       </section>
     </div>
   );

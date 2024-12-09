@@ -106,7 +106,7 @@ const Profile = () => {
               navigate("/update-profile");
             }}
             type="button"
-            className="p-1 text-slate-50 rounded-md font-bold hover:cursor-pointer w-[25%] bg-gradient-to-b from-cyan-300 to-cyan-500  hover:bg-gradient-to-b hover:from-green-300 hover:to-green-500 duration-200 shadow-md"
+            className="p-1 text-slate-50 rounded-md font-bold hover:cursor-pointer w-[40%] bg-gradient-to-b from-cyan-300 to-cyan-500  hover:bg-gradient-to-b hover:from-green-300 hover:to-green-500 duration-200 shadow-md"
           >
             Edit
           </button>

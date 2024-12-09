@@ -1,90 +1,93 @@
 import { useSnapshot } from "valtio";
-import { studentData } from "../../store/StudentData";
-import AddStudents from "./AddStudents";
-import { usersData } from "../../store/UsersData";
+// import { studentData } from "../../store/StudentData";
+// import AddStudents from "./AddStudents";
+// import { usersData } from "../../store/UsersData";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import UpdateStudents from "./UpdateStudents";
-import ViewStudents from "./ViewStudents";
+// import UpdateStudents from "./UpdateStudents";
+// import ViewStudents from "./ViewStudents";
+import { archiveData } from "../store/ArchiveData";
+import { usersData } from "../store/UsersData";
+import { studentData } from "../store/StudentData";
 
-const Students = () => {
-  const [students, setStudents] = useState<(typeof studentData)[]>();
+const ArchivedStudents = () => {
+  const [students, setStudents] = useState<(typeof archiveData)[]>();
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredStudents, setFilteredStudents] =
-    useState<(typeof studentData)[]>();
-  const student = useSnapshot(studentData);
+    useState<(typeof archiveData)[]>();
+  // const student = useSnapshot(archiveData);
   const open = useSnapshot(usersData);
   let { id } = useParams<string>();
   const navigate = useNavigate();
   const snap = useSnapshot(studentData);
 
-  const handleUpdate = async () => {
-    // console.log(id);
-    const updatedStudents = {
-      lastName: studentData.lastName,
-      firstName: studentData.firstName,
-      middleName: studentData.middleName,
-      email: studentData.email,
-      sex: studentData.sex,
-    };
-    // console.log(updatedStudents, "Hello, its updated students");
-    const res = await fetch("http://localhost:8000/students/" + snap.id, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updatedStudents),
-    });
-    if (res.ok) {
-      alert("Successfully Updated Student");
-    } else {
-      alert("Error Occured");
-    }
-  };
+  //   const handleUpdate = async () => {
+  //     // console.log(id);
+  //     const updatedStudents = {
+  //       lastName: studentData.lastName,
+  //       firstName: studentData.firstName,
+  //       middleName: studentData.middleName,
+  //       email: studentData.email,
+  //       sex: studentData.sex,
+  //     };
+  //     // console.log(updatedStudents, "Hello, its updated students");
+  //     const res = await fetch("http://localhost:8000/students/" + snap.id, {
+  //       method: "PATCH",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(updatedStudents),
+  //     });
+  //     if (res.ok) {
+  //       alert("Successfully Updated Student");
+  //     } else {
+  //       alert("Error Occured");
+  //     }
+  //   };
 
-  const fetchStudents = () => {
-    fetch("http://localhost:8000/students/" + id)
-      .then((res) => {
-        return res.json();
-      })
-      .then((resp) => {
-        studentData.lastName = resp?.lastName;
-        studentData.firstName = resp?.firstName;
-        studentData.middleName = resp?.middleName;
-        studentData.email = resp?.email;
-        studentData.sex = resp?.sex;
-      })
-      .catch((err) => {
-        alert("An Error Occured : " + err.message);
-      });
-  };
+  //   const fetchStudents = () => {
+  //     fetch("http://localhost:8000/students/" + id)
+  //       .then((res) => {
+  //         return res.json();
+  //       })
+  //       .then((resp) => {
+  //         studentData.lastName = resp?.lastName;
+  //         studentData.firstName = resp?.firstName;
+  //         studentData.middleName = resp?.middleName;
+  //         studentData.email = resp?.email;
+  //         studentData.sex = resp?.sex;
+  //       })
+  //       .catch((err) => {
+  //         alert("An Error Occured : " + err.message);
+  //       });
+  //   };
 
-  const storeArchive = async () => {
-    await fetch("http://localhost:8000/students/" + id)
-      .then((res) => {
-        return res.json();
-      })
-      .then((resp) => {
-        studentData.id = resp.id;
-        studentData.lastName = resp.lastName;
-        studentData.firstName = resp.firstName;
-        studentData.middleName = resp.middleName;
-        studentData.email = resp.email;
-        studentData.sex = resp.sex;
-      });
+  //   const storeArchive = async () => {
+  //     await fetch("http://localhost:8000/students/" + id)
+  //       .then((res) => {
+  //         return res.json();
+  //       })
+  //       .then((resp) => {
+  //         studentData.id = resp.id;
+  //         studentData.lastName = resp.lastName;
+  //         studentData.firstName = resp.firstName;
+  //         studentData.middleName = resp.middleName;
+  //         studentData.email = resp.email;
+  //         studentData.sex = resp.sex;
+  //       });
 
-    const res = await fetch("http://localhost:8000/archive", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(studentData),
-    });
-    if (res.ok) {
-      // alert("Successfully Added Student");
-    } else {
-      alert("Error Occured");
-    }
-  };
+  //     const res = await fetch("http://localhost:8000/archive", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(studentData),
+  //     });
+  //     if (res.ok) {
+  //       // alert("Successfully Added Student");
+  //     } else {
+  //       alert("Error Occured");
+  //     }
+  //   };
 
   const handleDelete = async () => {
-    const res = await fetch("http://localhost:8000/students/" + id, {
+    const res = await fetch("http://localhost:8000/archive/" + id, {
       method: "DELETE",
     });
     if (res.ok) {
@@ -94,19 +97,19 @@ const Students = () => {
     }
   };
 
-  const handleSubmit = async () => {
-    studentData.id = String(Math.random().valueOf());
-    const res = await fetch("http://localhost:8000/students", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(studentData),
-    });
-    if (res.ok) {
-      alert("Successfully Added Student");
-    } else {
-      alert("Error Occured");
-    }
-  };
+  //   const handleSubmit = async () => {
+  //     studentData.id = String(Math.random().valueOf());
+  //     const res = await fetch("http://localhost:8000/students", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(studentData),
+  //     });
+  //     if (res.ok) {
+  //       alert("Successfully Added Student");
+  //     } else {
+  //       alert("Error Occured");
+  //     }
+  //   };
 
   const handleSearch = () => {
     if (!students) return;
@@ -124,7 +127,7 @@ const Students = () => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:8000/students")
+    fetch("http://localhost:8000/archive")
       .then((res) => {
         return res.json();
       })
@@ -139,7 +142,7 @@ const Students = () => {
 
   return (
     <div className="flex justify-center">
-      <div className="bg-blue-50 p-10 rounded-lg shadow-md">
+      <div className="bg-red-50 p-10 rounded-lg shadow-md">
         <span className="flex flex-col items-center ">
           <section className="flex justify-evenly w-[100%]">
             <button
@@ -147,7 +150,7 @@ const Students = () => {
               onClick={() => {
                 usersData.open = false;
               }}
-              className="p-1 text-slate-50  rounded-md font-bold hover:cursor-pointer w-[200px] bg-gradient-to-b from-red-500 to-red-400  hover:from-green-300 hover:to-green-500 active:shadow duration-200 shadow-md"
+              className="p-1 opacity-0 hover:cursor-default text-slate-50  rounded-md font-bold  w-[200px] bg-gradient-to-b from-red-500 to-red-400  hover:from-green-300 hover:to-green-500 active:shadow duration-200 shadow-md"
             >
               Add Student
             </button>
@@ -216,39 +219,23 @@ const Students = () => {
                   <p className="  text-start">{student?.email}</p>
                 </section>
                 <section className="flex py-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      id = student?.id;
-                      usersData.open2 = false;
-                      fetchStudents();
-                    }}
-                    className="px-3 py-1 bg-green-400 shadow-md text-white font-bold rounded-md hover:bg-green-500 duration-200 mx-1"
-                  >
+                  <p className="px-3 opacity-0 hover:cursor-default py-1 bg-green-400 shadow-md text-white font-bold rounded-md hover:bg-green-500 duration-200 mx-1">
                     Update
-                  </button>
+                  </p>
                   <button
                     type="submit"
                     onClick={() => {
                       id = student?.id;
-                      storeArchive();
+                      //   storeArchive();
                       handleDelete();
                     }}
                     className="px-3 py-1 bg-red-400 shadow-md text-white font-bold rounded-md hover:bg-red-500 duration-200 mx-1"
                   >
                     Delete
                   </button>
-                  <button
-                    onClick={() => {
-                      id = student?.id;
-                      usersData.open3 = false;
-                      fetchStudents();
-                    }}
-                    type="button"
-                    className="px-3 py-1 bg-green-400 shadow-md text-white font-bold rounded-md hover:bg-green-500 duration-200 mx-1"
-                  >
+                  <p className="px-3 hover:cursor-default opacity-0 py-1 bg-green-400 shadow-md text-white font-bold rounded-md hover:bg-green-500 duration-200 mx-1">
                     View
-                  </button>
+                  </p>
                 </section>
               </form>
             ))}
@@ -257,7 +244,7 @@ const Students = () => {
           {/* Add Students */}
 
           <form
-            onSubmit={handleSubmit}
+            // onSubmit={handleSubmit}
             className={`${
               open.open
                 ? "opacity-0 w-0 left-0 top-1/2"
@@ -278,7 +265,7 @@ const Students = () => {
                 X
               </button>
             </section>
-            <AddStudents />
+            {/* <AddStudents /> */}
             <button
               type="submit"
               className="p-1 text-slate-50 mt-5 rounded-md font-bold hover:cursor-pointer w-[68%] bg-gradient-to-b from-red-500 to-red-400  hover:from-green-300 hover:to-green-500 active:shadow duration-200 shadow-md"
@@ -290,7 +277,7 @@ const Students = () => {
           {/* Update Students */}
 
           <form
-            onSubmit={handleUpdate}
+            // onSubmit={handleUpdate}
             className={`${
               open.open2
                 ? "opacity-0 w-0 left-0 top-1/2"
@@ -316,7 +303,7 @@ const Students = () => {
                 X
               </button>
             </section>
-            <UpdateStudents />
+            {/* <UpdateStudents /> */}
             <button
               type="submit"
               className="p-1 text-slate-50 mt-5 rounded-md font-bold hover:cursor-pointer w-[68%] bg-gradient-to-b from-red-500 to-red-400  hover:from-green-300 hover:to-green-500 active:shadow duration-200 shadow-md"
@@ -348,7 +335,7 @@ const Students = () => {
                 X
               </button>
             </section>
-            <ViewStudents />
+            {/* <ViewStudents /> */}
           </form>
         </div>
       </div>
@@ -356,4 +343,4 @@ const Students = () => {
   );
 };
 
-export default Students;
+export default ArchivedStudents;

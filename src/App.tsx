@@ -7,6 +7,7 @@ import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 import UpdateProfile from "./components/UpdateProfile";
+import ArchivedStudents from "./pages/ArchivedStudents";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: "/update-profile",
         element: <UpdateProfile />,
+      },
+      {
+        path: "/archived",
+        element: <ArchivedStudents />,
       },
     ],
   },

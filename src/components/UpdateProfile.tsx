@@ -220,12 +220,21 @@ const UpdateProfile = () => {
             />
           </span>
         </section>
-        <section className="flex justify-center">
+        <section className="flex justify-center gap-5">
           <button
             type="submit"
             className="p-1 text-slate-50 rounded-md font-bold hover:cursor-pointer w-[25%] bg-gradient-to-b from-cyan-300 to-cyan-500  hover:bg-gradient-to-b hover:from-green-300 hover:to-green-500 duration-200 shadow-md"
           >
             Save
+          </button>
+          <button
+            onClick={() => {
+              navigate("/profile");
+            }}
+            type="button"
+            className="p-1 text-slate-50 rounded-md font-bold hover:cursor-pointer w-[25%] bg-gradient-to-b from-cyan-300 to-cyan-500  hover:bg-gradient-to-b hover:from-red-300 hover:to-red-500 duration-200 shadow-md"
+          >
+            Cancel
           </button>
         </section>
       </form>

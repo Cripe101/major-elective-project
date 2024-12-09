@@ -85,10 +85,11 @@ const Signup = () => {
           <section className="grid grid-cols-3 gap-3">
             <span className="relative rounded-lg">
               <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                LName
+                L. Name
               </p>
               <input
                 type="text"
+                required
                 value={snap.lastName}
                 onChange={(e) => {
                   usersData.lastName = e.target.value;
@@ -98,10 +99,11 @@ const Signup = () => {
             </span>
             <span className="relative rounded-lg">
               <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                FName
+                F. Name
               </p>
               <input
                 type="text"
+                required
                 value={snap.firstName}
                 onChange={(e) => {
                   usersData.firstName = e.target.value;
@@ -110,8 +112,8 @@ const Signup = () => {
               />
             </span>
             <span className="relative rounded-lg">
-              <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                MName
+              <p className="text-xs text-center w-[55px] font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+                M. Name
               </p>
               <input
                 type="text"
@@ -137,15 +139,17 @@ const Signup = () => {
                 className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1 "
               />
             </span>
+
             <span className="relative rounded-lg">
               <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                Email
+                User Name
               </p>
               <input
                 type="text"
-                value={snap.email}
+                required
+                value={snap.id}
                 onChange={(e) => {
-                  usersData.email = e.target.value;
+                  usersData.id = e.target.value;
                 }}
                 className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1 "
               />
@@ -153,44 +157,66 @@ const Signup = () => {
           </section>
 
           <span className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              User Name
+            <p className="text-xs text-center font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+              Recovery Text
             </p>
             <input
               type="text"
-              value={snap.id}
+              required
+              value={snap.recoveryPass}
               onChange={(e) => {
-                usersData.id = e.target.value;
+                usersData.recoveryPass = e.target.value;
               }}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1 "
             />
           </span>
+
           <span className="relative rounded-lg">
             <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              Password
+              Email
             </p>
             <input
-              type="password"
-              value={snap.password}
+              type="email"
+              required
+              value={snap.email}
               onChange={(e) => {
-                usersData.password = e.target.value;
+                usersData.email = e.target.value;
               }}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1 "
             />
           </span>
-          <span className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              Confirm Password
-            </p>
-            <input
-              type="password"
-              value={snap.confirmPassword}
-              onChange={(e) => {
-                usersData.confirmPassword = e.target.value;
-              }}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1 "
-            />
-          </span>
+
+          <section className="grid grid-cols-2 gap-3">
+            <span className="relative rounded-lg">
+              <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+                Password
+              </p>
+              <input
+                type="password"
+                required
+                value={snap.password}
+                onChange={(e) => {
+                  usersData.password = e.target.value;
+                }}
+                className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1 "
+              />
+            </span>
+            <span className="relative rounded-lg">
+              <p className="text-xs w-[108px] text-center font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+                Confirm Password
+              </p>
+              <input
+                type="password"
+                required
+                value={snap.confirmPassword}
+                onChange={(e) => {
+                  usersData.confirmPassword = e.target.value;
+                }}
+                className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1 "
+              />
+            </span>
+          </section>
+
           <section className="flex px-2 gap-3 group">
             <input
               type="checkbox"

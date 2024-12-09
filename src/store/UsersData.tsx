@@ -4,6 +4,7 @@ interface AppState {
   confirmPassword: string;
   password: string;
   newPassword: string;
+  recoveryPass: string;
   firstName: string;
   middleName: string;
   lastName: string;
@@ -19,6 +20,7 @@ export const usersData = proxy<AppState>({
   password: "",
   newPassword: "",
   confirmPassword: "",
+  recoveryPass: "",
   firstName: "",
   middleName: "",
   lastName: "",

@@ -4,12 +4,12 @@ interface AppState {
   id: string;
   firstName: string;
   middleName: string;
-  sex: string;
   lastName: string;
+  sex: string;
   email: string;
 }
 
-export const studentData = proxy<AppState>({
+export const archiveData = proxy<AppState>({
   id: "",
   firstName: "",
   middleName: "",

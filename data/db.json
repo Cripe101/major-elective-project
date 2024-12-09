@@ -14,9 +14,23 @@
     },
     {
       "id": "cripe101",
-      "password": "$2a$10$ftnZc3XPR5i6w95dVS215ucaFw591JpdoJSQk8Tznl4DfiBuP2V5y",
+      "password": "$2a$10$RqdzdJ9AVBzOvgUYTvqC1O0FkUV6c3WsD1oWr2QoAltMDE8ihho.O",
       "newPassword": "",
       "confirmPassword": "Cripe1008",
+      "firstName": "Cripe",
+      "middleName": "Tolibao",
+      "lastName": "Limpangog",
+      "email": "cripeguild1001.1001@gmail.com",
+      "phoneNum": "09317619652",
+      "open": true,
+      "open2": true,
+      "open3": true
+    },
+    {
+      "id": "mhegz1008",
+      "password": "$2a$10$nC9v6YgZEkTCtO6qTr52nuJLj8DmM/T8opzTAuj4YlszeQlHsQvvy",
+      "newPassword": "",
+      "confirmPassword": "MM1008",
       "firstName": "Cripe",
       "middleName": "Tolibao",
       "lastName": "Limpangog",
@@ -29,25 +43,54 @@
   ],
   "students": [
     {
-      "id": "0.2857396806096075",
-      "firstName": "Mheg",
+      "id": "0.513593953551402",
+      "firstName": "Mheg Ryan",
       "middleName": "Tolibao",
       "lastName": "Limpangog",
+      "sex": "Male",
       "email": "mhegryanlimpangog58@gmail.com"
     },
     {
-      "id": "0.7118228292794555",
+      "id": "0.3670409663774803",
       "firstName": "Mac Alley",
       "middleName": "Tolibao",
       "lastName": "Limpangog",
+      "sex": "Male",
       "email": "macalley12@gmail.com"
     },
     {
-      "id": "0.30375030350777577",
+      "id": "0.5210809332453816",
       "firstName": "Mark Jasper",
       "middleName": "",
       "lastName": "Rojas",
+      "sex": "Male",
       "email": "mark@gmail.com"
+    },
+    {
+      "id": "0.24581869620642594",
+      "firstName": "Jarod",
+      "middleName": "Mauring",
+      "lastName": "Melecio",
+      "sex": "Male",
+      "email": "me@gmail.com"
+    }
+  ],
+  "archive": [
+    {
+      "id": "0.29696048633849537",
+      "firstName": "Mark Jasper",
+      "middleName": "",
+      "lastName": "Rojas",
+      "sex": "Male",
+      "email": "mark@gmail.com"
+    },
+    {
+      "id": "0.8273739148567116",
+      "firstName": "Cripe",
+      "middleName": "Tolibao",
+      "lastName": "Limpangog",
+      "sex": "Male",
+      "email": "cripeguild1001.1001@gmail.com"
     }
   ]
 }
