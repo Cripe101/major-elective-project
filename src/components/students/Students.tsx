@@ -4,13 +4,13 @@ import AddStudents from "./AddStudents";
 import { usersData } from "../../store/UsersData";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { randomUUID } from "crypto";
 import UpdateStudents from "./UpdateStudents";
 import ViewStudents from "./ViewStudents";
 
 const Students = () => {
   const [students, setStudents] = useState<(typeof studentData)[]>();
-  const [fetchStudent, setFetchStudent] = useState<typeof studentData>();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredStudents, setFilteredStudents] = useState<(typeof studentData)[]>();
   const student = useSnapshot(studentData);
   const open = useSnapshot(usersData);
   let { id } = useParams<string>();
@@ -48,7 +48,6 @@ const Students = () => {
         studentData.firstName = resp?.firstName;
         studentData.middleName = resp?.middleName;
         studentData.email = resp?.email;
-        // console.log(resp?.lastName + "Hello, Its Fetch");
       })
       .catch((err) => {
         alert("An Error Occured : " + err.message);
@@ -80,6 +79,20 @@ const Students = () => {
     }
   };
 
+  const handleSearch = () => {
+    if (!students) return;
+    
+    const filtered = students.filter((student) => {
+      const fullName = `${student.lastName} ${student.firstName} ${student.middleName}`.toLowerCase();
+      const email = student.email.toLowerCase();
+      const search = searchTerm.toLowerCase();
+      
+      return fullName.includes(search) || email.includes(search);
+    });
+    
+    setFilteredStudents(filtered);
+  };
+
   useEffect(() => {
     fetch("http://localhost:8000/students")
       .then((res) => {
@@ -87,8 +100,7 @@ const Students = () => {
       })
       .then((resp) => {
         setStudents(resp);
-        // console.log(resp);
-        // console.log(student, " Student");
+        setFilteredStudents(resp);
       })
       .catch(() => {
         alert("Failed to fetch Students");
@@ -116,9 +128,13 @@ const Students = () => {
               <input
                 type="text"
                 placeholder="Search..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 className="p-1 w-[150px] rounded-l-md border-2 border-black text-center"
               />
-              <button className="p-1 border-2 border-black bg-black font-bold text-white rounded-r-md hover:text-green-200 duration-200">
+              <button 
+                onClick={handleSearch}
+                className="p-1 border-2 border-black bg-black font-bold text-white rounded-r-md hover:text-green-200 duration-200">
                 Search
               </button>
             </section>
@@ -132,7 +148,7 @@ const Students = () => {
           {/* Display All Students */}
 
           <span className="flex flex-col justify-center w-[100%]">
-            {students?.map((student) => (
+            {filteredStudents?.map((student) => (
               <form
                 key={student.id}
                 className="flex justify-between items-center"
@@ -153,7 +169,7 @@ const Students = () => {
                       usersData.open2 = false;
                       fetchStudents();
                     }}
-                    className="p-1 text-slate-50 rounded-md font-bold hover:cursor-pointer w-[90px] ml-1 bg-gradient-to-b from-green-400 to-green-500  hover:from-red-400 hover:scale-105 hover:to-red-500 active:shadow duration-200 shadow-md"
+                    className="px-3 py-1 bg-green-400 text-white font-bold rounded-md hover:bg-green-500 duration-200 mx-1"
                   >
                     Update
                   </button>
@@ -163,7 +179,7 @@ const Students = () => {
                       id = student?.id;
                       handleDelete();
                     }}
-                    className="p-1 text-slate-50 rounded-md font-bold hover:cursor-pointer w-[90px] ml-1 bg-gradient-to-b from-red-500 to-red-400  hover:from-red-400 hover:scale-105 hover:to-red-500 active:shadow duration-200 shadow-md"
+                    className="px-3 py-1 bg-red-400 text-white font-bold rounded-md hover:bg-red-500 duration-200 mx-1"
                   >
                     Delete
                   </button>
@@ -174,7 +190,7 @@ const Students = () => {
                       fetchStudents();
                     }}
                     type="button"
-                    className="p-1 text-slate-50 rounded-md font-bold hover:cursor-pointer w-[90px] ml-1 bg-gradient-to-b from-green-500 to-green-400  hover:from-green-400 hover:scale-105 hover:to-green-500 active:shadow duration-200 shadow-md"
+                    className="px-3 py-1 bg-green-400 text-white font-bold rounded-md hover:bg-green-500 duration-200 mx-1"
                   >
                     View
                   </button>
