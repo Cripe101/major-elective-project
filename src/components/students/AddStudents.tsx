@@ -40,7 +40,6 @@ const AddStudents = () => {
         </p>
         <input
           type="text"
-          required
           value={snap.middleName}
           onChange={(e) => {
             studentData.middleName = e.target.value;

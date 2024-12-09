@@ -129,6 +129,8 @@ const Students = () => {
           </section>
         </span>
         <div className=" flex flex-col gap-2 items-center w-[1000px] h-[350px] overflow-auto no-scrollbar">
+          {/* Display All Students */}
+
           <span className="flex flex-col justify-center w-[100%]">
             {students?.map((student) => (
               <form
@@ -137,8 +139,8 @@ const Students = () => {
               >
                 <section className="flex w-[100%] border-b-2 hover:border-b-green-400 duration-200 py-2">
                   <p className="  text-start w-[50%]">
-                    {student?.lastName} {student?.firstName}{" "}
-                    {student?.middleName[0]} .
+                    {student?.lastName}, {student?.firstName}{" "}
+                    {student?.middleName}
                   </p>
                   <p className="  text-start w-[50%]">{student?.email}</p>
                 </section>
