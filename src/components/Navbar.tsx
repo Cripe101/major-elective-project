@@ -9,7 +9,7 @@ const Navbar = () => {
       <section>
         <h1
           onClick={() => {
-            navigate("/home");
+            navigate("/");
           }}
           className="text-lg font-serif font-bold text-blue-700 bg-blue-50 px-5 py-2 rounded-r-lg hover:px-7 cursor-pointer duration-200"
         >

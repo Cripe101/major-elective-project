@@ -19,6 +19,7 @@ const Students = () => {
   const snap = useSnapshot(studentData);
 
   const handleUpdate = async () => {
+    // studentData.id = student?.id;
     // console.log(id);
     const updatedStudents = {
       lastName: studentData.lastName,
@@ -173,7 +174,7 @@ const Students = () => {
           <span className="flex justify-between items-center w-[100%]">
             <section className="grid grid-cols-3 w-[800px] my-5">
               <h1 className="font-semibold text-start">Full Name</h1>
-              <h1 className="font-semibold text-start ">Sex</h1>
+              <h1 className="font-semibold text-center pr-14">Sex</h1>
               <h1 className="font-semibold text-start ">Email</h1>
             </section>
             <section className="f py-2 hidden">
@@ -212,7 +213,7 @@ const Students = () => {
                     {student?.lastName}, {student?.firstName}{" "}
                     {student?.middleName}
                   </p>
-                  <p className="pl-4 text-start">{student?.sex}</p>
+                  <p className="text-center">{student?.sex}</p>
                   <p className="  text-start">{student?.email}</p>
                 </section>
                 <section className="flex py-2">
@@ -220,6 +221,9 @@ const Students = () => {
                     type="button"
                     onClick={() => {
                       id = student?.id;
+                      studentData.id = student?.id;
+
+                      // console.log(id);
                       usersData.open2 = false;
                       fetchStudents();
                     }}

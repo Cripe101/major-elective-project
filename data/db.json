@@ -1,40 +1,15 @@
 {
   "users": [
     {
-      "id": "mhegz",
-      "password": "$2a$10$VBJnZu62N8rTjUYopYLb0.pBrdm7/Jhn3u4NrXszl/ngExoR4Xwm6",
+      "id": "cripe101",
+      "password": "$2a$10$yFv/4..u.XkzhX7hL9tyxuQaXMid04T/PEsTFE1ZYpH4h/Xki8rF.",
       "newPassword": "",
-      "confirmPassword": "Mhegz1008",
+      "confirmPassword": "MM1008",
+      "recoveryPass": "Anime",
       "firstName": "Mheg Ryan",
       "middleName": "Tolibao",
       "lastName": "Limpangog",
-      "email": "mhegryanlimpangog@gmail.com",
-      "phoneNum": "09317619652",
-      "open": true
-    },
-    {
-      "id": "cripe101",
-      "password": "$2a$10$RqdzdJ9AVBzOvgUYTvqC1O0FkUV6c3WsD1oWr2QoAltMDE8ihho.O",
-      "newPassword": "",
-      "confirmPassword": "Cripe1008",
-      "firstName": "Cripe",
-      "middleName": "Tolibao",
-      "lastName": "Limpangog",
-      "email": "cripeguild1001.1001@gmail.com",
-      "phoneNum": "09317619652",
-      "open": true,
-      "open2": true,
-      "open3": true
-    },
-    {
-      "id": "mhegz1008",
-      "password": "$2a$10$nC9v6YgZEkTCtO6qTr52nuJLj8DmM/T8opzTAuj4YlszeQlHsQvvy",
-      "newPassword": "",
-      "confirmPassword": "MM1008",
-      "firstName": "Cripe",
-      "middleName": "Tolibao",
-      "lastName": "Limpangog",
-      "email": "cripeguild1001.1001@gmail.com",
+      "email": "mhegryanlimpangog58@gmail.com",
       "phoneNum": "09317619652",
       "open": true,
       "open2": true,
@@ -91,6 +66,30 @@
       "lastName": "Limpangog",
       "sex": "Male",
       "email": "cripeguild1001.1001@gmail.com"
+    },
+    {
+      "id": "0.26190339874593715",
+      "firstName": "Cripe",
+      "middleName": "Tolibao",
+      "lastName": "Limpangog",
+      "sex": "Male",
+      "email": "cripeguild1001.1001@gmail.com"
+    },
+    {
+      "id": "0.6654282955952096",
+      "firstName": "Aika",
+      "middleName": "R",
+      "lastName": "Sususco",
+      "sex": "Female",
+      "email": "aika123@gmail.com"
+    },
+    {
+      "id": "0.9602381664632647",
+      "firstName": "Mheg Ryan",
+      "middleName": "Tolibao",
+      "lastName": "Limpangog",
+      "sex": "Male",
+      "email": "mhegryanlimpangog58@gmail.com"
     }
   ]
 }

@@ -9,6 +9,7 @@ import { useNavigate, useParams } from "react-router";
 import { archiveData } from "../store/ArchiveData";
 import { usersData } from "../store/UsersData";
 import { studentData } from "../store/StudentData";
+import ViewStudents from "../components/students/ViewStudents";
 
 const ArchivedStudents = () => {
   const [students, setStudents] = useState<(typeof archiveData)[]>();
@@ -18,8 +19,8 @@ const ArchivedStudents = () => {
   // const student = useSnapshot(archiveData);
   const open = useSnapshot(usersData);
   let { id } = useParams<string>();
-  const navigate = useNavigate();
-  const snap = useSnapshot(studentData);
+  // const navigate = useNavigate();
+  // const snap = useSnapshot(studentData);
 
   //   const handleUpdate = async () => {
   //     // console.log(id);
@@ -43,22 +44,22 @@ const ArchivedStudents = () => {
   //     }
   //   };
 
-  //   const fetchStudents = () => {
-  //     fetch("http://localhost:8000/students/" + id)
-  //       .then((res) => {
-  //         return res.json();
-  //       })
-  //       .then((resp) => {
-  //         studentData.lastName = resp?.lastName;
-  //         studentData.firstName = resp?.firstName;
-  //         studentData.middleName = resp?.middleName;
-  //         studentData.email = resp?.email;
-  //         studentData.sex = resp?.sex;
-  //       })
-  //       .catch((err) => {
-  //         alert("An Error Occured : " + err.message);
-  //       });
-  //   };
+  const fetchStudents = () => {
+    fetch("http://localhost:8000/archive/" + id)
+      .then((res) => {
+        return res.json();
+      })
+      .then((resp) => {
+        studentData.lastName = resp?.lastName;
+        studentData.firstName = resp?.firstName;
+        studentData.middleName = resp?.middleName;
+        studentData.email = resp?.email;
+        studentData.sex = resp?.sex;
+      })
+      .catch((err) => {
+        alert("An Error Occured : " + err.message);
+      });
+  };
 
   //   const storeArchive = async () => {
   //     await fetch("http://localhost:8000/students/" + id)
@@ -86,16 +87,16 @@ const ArchivedStudents = () => {
   //     }
   //   };
 
-  const handleDelete = async () => {
-    const res = await fetch("http://localhost:8000/archive/" + id, {
-      method: "DELETE",
-    });
-    if (res.ok) {
-      alert("Successfully Deleted Student");
-    } else {
-      alert("Error Occured");
-    }
-  };
+  // const handleDelete = async () => {
+  //   const res = await fetch("http://localhost:8000/archive/" + id, {
+  //     method: "DELETE",
+  //   });
+  //   if (res.ok) {
+  //     alert("Successfully Deleted Student");
+  //   } else {
+  //     alert("Error Occured");
+  //   }
+  // };
 
   //   const handleSubmit = async () => {
   //     studentData.id = String(Math.random().valueOf());
@@ -176,7 +177,7 @@ const ArchivedStudents = () => {
           <span className="flex justify-between items-center w-[100%]">
             <section className="grid grid-cols-3 w-[800px] my-5">
               <h1 className="font-semibold text-start">Full Name</h1>
-              <h1 className="font-semibold text-start ">Sex</h1>
+              <h1 className="font-semibold text-center pr-14">Sex</h1>
               <h1 className="font-semibold text-start ">Email</h1>
             </section>
             <section className="f py-2 hidden">
@@ -203,7 +204,6 @@ const ArchivedStudents = () => {
         </span>
         <div className=" flex flex-col gap-2 items-center w-[1000px] h-[350px] overflow-auto no-scrollbar">
           {/* Display All Students */}
-
           <span className="flex flex-col justify-center w-[100%]">
             {filteredStudents?.map((student) => (
               <form
@@ -215,7 +215,7 @@ const ArchivedStudents = () => {
                     {student?.lastName}, {student?.firstName}{" "}
                     {student?.middleName}
                   </p>
-                  <p className="pl-4 text-start">{student?.sex}</p>
+                  <p className=" text-center">{student?.sex}</p>
                   <p className="  text-start">{student?.email}</p>
                 </section>
                 <section className="flex py-2">
@@ -223,26 +223,34 @@ const ArchivedStudents = () => {
                     Update
                   </p>
                   <button
+                    onClick={() => {
+                      usersData.open3 = false;
+                      id = student?.id;
+                      //   storeArchive();
+                      // handleDelete();
+                      fetchStudents();
+                    }}
+                    type="button"
+                    className="px-3  py-1 bg-green-400 shadow-md text-white font-bold rounded-md hover:bg-green-500 duration-200 mx-1"
+                  >
+                    View
+                  </button>
+                  <button
                     type="submit"
                     onClick={() => {
                       id = student?.id;
                       //   storeArchive();
-                      handleDelete();
+                      // handleDelete();
                     }}
-                    className="px-3 py-1 bg-red-400 shadow-md text-white font-bold rounded-md hover:bg-red-500 duration-200 mx-1"
+                    className="px-3 hover:cursor-default opacity-0 py-1 bg-red-400 shadow-md text-white font-bold rounded-md hover:bg-red-500 duration-200 mx-1"
                   >
                     Delete
                   </button>
-                  <p className="px-3 hover:cursor-default opacity-0 py-1 bg-green-400 shadow-md text-white font-bold rounded-md hover:bg-green-500 duration-200 mx-1">
-                    View
-                  </p>
                 </section>
               </form>
             ))}
           </span>
-
           {/* Add Students */}
-
           <form
             // onSubmit={handleSubmit}
             className={`${
@@ -273,9 +281,7 @@ const ArchivedStudents = () => {
               Add
             </button>
           </form>
-
           {/* Update Students */}
-
           <form
             // onSubmit={handleUpdate}
             className={`${
@@ -311,9 +317,7 @@ const ArchivedStudents = () => {
               Update
             </button>
           </form>
-
           {/* View Students */}
-
           <form
             className={`${
               open.open3
@@ -335,7 +339,7 @@ const ArchivedStudents = () => {
                 X
               </button>
             </section>
-            {/* <ViewStudents /> */}
+            <ViewStudents />
           </form>
         </div>
       </div>
