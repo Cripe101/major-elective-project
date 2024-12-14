@@ -1,6 +1,6 @@
 import { proxy } from "valtio";
 interface AppState {
-  id: string;
+  userName: string;
   confirmPassword: string;
   password: string;
   newPassword: string;
@@ -16,7 +16,7 @@ interface AppState {
 }
 
 export const usersData = proxy<AppState>({
-  id: "",
+  userName: "",
   password: "",
   newPassword: "",
   confirmPassword: "",

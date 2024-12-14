@@ -8,6 +8,7 @@ import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 import UpdateProfile from "./components/UpdateProfile";
 import ArchivedStudents from "./pages/ArchivedStudents";
+import ForgotPassword from "./components/ForgotPassword";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: "/login/signup",
         element: <Signup />,
+      },
+      {
+        path: "/login/forgot-password",
+        element: <ForgotPassword />,
       },
     ],
   },

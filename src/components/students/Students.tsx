@@ -9,6 +9,7 @@ import ViewStudents from "./ViewStudents";
 
 const Students = () => {
   const [students, setStudents] = useState<(typeof studentData)[]>();
+  // const [checkStudents, setCheckStudents] = useState<(typeof studentData)[]>();
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredStudents, setFilteredStudents] =
     useState<(typeof studentData)[]>();
@@ -19,25 +20,43 @@ const Students = () => {
   const snap = useSnapshot(studentData);
 
   const handleUpdate = async () => {
-    // studentData.id = student?.id;
-    // console.log(id);
-    const updatedStudents = {
-      lastName: studentData.lastName,
-      firstName: studentData.firstName,
-      middleName: studentData.middleName,
-      email: studentData.email,
-      sex: studentData.sex,
-    };
-    // console.log(updatedStudents, "Hello, its updated students");
-    const res = await fetch("http://localhost:8000/students/" + snap.id, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updatedStudents),
-    });
-    if (res.ok) {
-      alert("Successfully Updated Student");
-    } else {
-      alert("Error Occured");
+    try {
+      const response = await fetch("http://localhost:8000/students");
+      const students: (typeof studentData)[] = await response.json();
+
+      // Check if the student already exists
+      const studentExists: boolean = students.some(
+        (student: {
+          firstName: string;
+          lastName: string;
+          middleName: string;
+        }) =>
+          student.firstName === snap.firstName &&
+          student.lastName === snap.lastName &&
+          student.middleName === snap.middleName
+      );
+      console.log(studentExists);
+      // console.log(id);
+      console.log(snap.id);
+
+      if (studentExists) {
+        alert("Student already exists");
+      } else {
+        const res = await fetch("http://localhost:8000/students/" + snap.id, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(studentData),
+        });
+
+        if (res.ok) {
+          alert("Successfully Updated Student");
+        } else {
+          alert("Error Occurred");
+        }
+      }
+    } catch (error) {
+      // console.error("Error:", error);
+      alert("An error occurred while fetching or submitting data.");
     }
   };
 
@@ -78,7 +97,6 @@ const Students = () => {
       body: JSON.stringify(studentData),
     });
     if (res.ok) {
-      // alert("Successfully Added Student");
     } else {
       alert("Error Occured");
     }
@@ -96,16 +114,42 @@ const Students = () => {
   };
 
   const handleSubmit = async () => {
-    studentData.id = String(Math.random().valueOf());
-    const res = await fetch("http://localhost:8000/students", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(studentData),
-    });
-    if (res.ok) {
-      alert("Successfully Added Student");
-    } else {
-      alert("Error Occured");
+    try {
+      const response = await fetch("http://localhost:8000/students");
+      const students: (typeof studentData)[] = await response.json();
+
+      // Check if the student already exists
+      const studentExists: boolean = students.some(
+        (student: {
+          firstName: string;
+          lastName: string;
+          middleName: string;
+        }) =>
+          student.firstName === snap.firstName &&
+          student.lastName === snap.lastName &&
+          student.middleName === "" &&
+          student.middleName === snap.middleName
+      );
+
+      if (studentExists) {
+        alert("Student already exists");
+      } else {
+        studentData.id = String(Math.random().valueOf());
+        const res = await fetch("http://localhost:8000/students", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(studentData),
+        });
+
+        if (res.ok) {
+          alert("Successfully Added Student");
+        } else {
+          alert("Error Occurred");
+        }
+      }
+    } catch (error) {
+      // console.error("Error:", error);
+      // alert("An error occurred while fetching or submitting data.");
     }
   };
 

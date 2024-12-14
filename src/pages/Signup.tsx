@@ -9,51 +9,58 @@ const Signup = () => {
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    if (snap.password === snap.confirmPassword) {
-      const resp = await fetch("http://localhost:8000/users/" + snap.id).then(
-        (res) => {
-          if (res.ok) {
-            return true;
-          } else {
-            return false;
-          }
-        }
+
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*\d)[A-Za-z\d!@#$%^&*]{8,}$/;
+
+    if (!passwordRegex.test(snap.password)) {
+      alert(
+        "Password must be at least 8 characters long, include one uppercase letter, one lowercase letter, one number, and one special character."
       );
+    } else {
+      if (snap.password === snap.confirmPassword) {
+        const resp = await fetch("http://localhost:8000/users");
+        const users = await resp.json();
 
-      if (!resp) {
-        const saltRounds = 10;
-        const hashedPassword = await bcrypt.hash(
-          usersData.password,
-          saltRounds
+        const userExists = users.some(
+          (user: { userName: string }) => user.userName === snap.userName
         );
-        usersData.password = hashedPassword;
 
-        const res = await fetch("http://localhost:8000/users", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(usersData),
-        });
-        console.log(usersData);
+        if (!userExists) {
+          const saltRounds = 10;
+          const hashedPassword = await bcrypt.hash(
+            usersData.password,
+            saltRounds
+          );
+          usersData.password = hashedPassword;
 
-        if (res.ok) {
-          usersData.id = "";
-          usersData.firstName = "";
-          usersData.lastName = "";
-          usersData.middleName = "";
-          usersData.phoneNum = "";
-          usersData.email = "";
-          usersData.password = "";
-          usersData.confirmPassword = "";
-          alert("Registered Successfully");
-          navigate("/login");
+          const res = await fetch("http://localhost:8000/users", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(usersData),
+          });
+          // console.log(usersData);
+
+          if (res.ok) {
+            usersData.userName = "";
+            usersData.firstName = "";
+            usersData.lastName = "";
+            usersData.middleName = "";
+            usersData.phoneNum = "";
+            usersData.email = "";
+            usersData.password = "";
+            usersData.confirmPassword = "";
+            alert("Registered Successfully");
+            navigate("/login");
+          } else {
+            alert(`error${res.status}`);
+          }
         } else {
-          alert(`error${res.status}`);
+          alert("User Already Exist");
         }
       } else {
-        alert("User Already Exist");
+        alert("Failed to fetch data");
       }
-    } else {
-      alert("Failed to fetch data");
     }
   };
 
@@ -147,9 +154,9 @@ const Signup = () => {
               <input
                 type="text"
                 required
-                value={snap.id}
+                value={snap.userName}
                 onChange={(e) => {
-                  usersData.id = e.target.value;
+                  usersData.userName = e.target.value;
                 }}
                 className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1 "
               />
@@ -192,6 +199,8 @@ const Signup = () => {
                 Password
               </p>
               <input
+                pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*\d)[A-Za-z\d!@#$%^&*]{8,}"
+                title="Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character."
                 type="password"
                 required
                 value={snap.password}

@@ -2,70 +2,89 @@ import { useNavigate } from "react-router";
 import { useSnapshot } from "valtio";
 import { usersData } from "../store/UsersData";
 import bcrypt from "bcryptjs";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Signin = () => {
   const snap = useSnapshot(usersData);
-
+  const [userName, setUserName] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
   // const userName = sessionStorage.getItem("userName");
 
-  const proceedSignin = (e: { preventDefault: () => void }) => {
+  useEffect(() => {
+    const savedUserName = localStorage.getItem("rememberedUserName");
+
+    if (savedUserName) {
+      usersData.userName = savedUserName;
+      setRememberMe(true);
+    }
+  }, []);
+
+  const proceedSignin = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
+
+    if (rememberMe) {
+      localStorage.setItem("rememberedUserName", snap.userName);
+    } else {
+      // Clear saved credentials if "Remember Me" is unchecked
+      localStorage.removeItem("rememberedUserName");
+    }
+
     if (validate()) {
-      fetch("http://localhost:8000/users/" + snap.id)
-        .then((res) => {
-          return res.json();
-        })
-        .then(async (resp) => {
-          console.log(resp);
+      try {
+        const response = await fetch("http://localhost:8000/users");
+        if (!response.ok) {
+          alert("Failed to fetch user data.");
+          return;
+        }
 
-          if (Object.keys(resp).length === 0) {
-            alert(" User not found ");
-          } else {
-            const match = await bcrypt.compare(snap.password, resp.password);
+        const users = await response.json();
 
-            if (match) {
-              sessionStorage.setItem("userName", snap.id);
-              usersData.password = "";
+        // Find the user based on `userName`
+        const user = users.find(
+          (u: { userName: string }) => u.userName === snap.userName
+        );
 
-              navigate("/");
-              alert(" Login successful! ");
-            } else {
-              alert(" Incorrect password ");
-            }
-            // if (resp.usersData.password === snap.password) {
-            //   sessionStorage.setItem("userName", snap.userName);
-            //   navigate("/home");
-            // } else {
-            //   console.log("error wrong password");
-            // }
-          }
-        })
-        .catch(() => {
-          alert("User not found ");
-        });
+        if (!user) {
+          alert("User does not exist");
+          return;
+        }
+
+        // Compare the entered password with the hashed password from the database
+        const passwordMatch = await bcrypt.compare(
+          snap.password,
+          user.password
+        );
+
+        if (!passwordMatch) {
+          alert("Incorrect password");
+          return;
+        }
+
+        // User exists, and password matches
+        sessionStorage.setItem("id", user.id); // Correctly store the matched user's ID
+        alert("Login Successfully");
+        usersData.userName = userName;
+        navigate("/"); // Ensure `navigate` is defined elsewhere in your code
+      } catch (error) {
+        console.error("Error during sign-in:", error);
+        alert("An error occurred while processing your request.");
+      }
     }
   };
+
   const validate = () => {
     let result = true;
-    if (snap.password === "" || snap.password === null) {
+    if (!snap.password) {
       result = false;
-      // alert("Enter Password");
+      alert("Enter Password");
     }
-    if (snap.id === "" || snap.id === null) {
+    if (!snap.userName) {
       result = false;
-      // alert("Enter User Name");
+      alert("Enter User Name");
     }
-
     return result;
   };
-
-  // useEffect(() => {
-  //   if (!(userName === "")) {
-  //     sessionStorage.removeItem("userName");
-  //   }
-  // });
 
   return (
     <div className="flex justify-center mt-40">
@@ -83,9 +102,9 @@ const Signin = () => {
             <input
               type="text"
               required
-              value={snap.id}
+              value={snap.userName}
               onChange={(e) => {
-                usersData.id = e.target.value;
+                usersData.userName = e.target.value;
               }}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1 "
             />
@@ -115,7 +134,9 @@ const Signin = () => {
               <input
                 id="link-checkbox"
                 type="checkbox"
-                value=""
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+                // value=""
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 hover:cursor-pointer"
               />
               <label
@@ -127,8 +148,9 @@ const Signin = () => {
             </section>
             <section className="flex items-center pt-2">
               <button
+                type="button"
                 onClick={() => {
-                  navigate("/forgot-password");
+                  navigate("/login/forgot-password");
                 }}
                 className="text-sm font-semibold hover:text-red-500 hover:cursor-pointer duration-200"
               >
@@ -145,7 +167,7 @@ const Signin = () => {
             <button
               type="button"
               onClick={() => {
-                usersData.id = "";
+                usersData.userName = "";
                 usersData.password = "";
                 navigate("/login/signup");
               }}

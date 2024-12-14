@@ -16,36 +16,13 @@ const ArchivedStudents = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredStudents, setFilteredStudents] =
     useState<(typeof archiveData)[]>();
-  // const student = useSnapshot(archiveData);
   const open = useSnapshot(usersData);
-  let { id } = useParams<string>();
-  // const navigate = useNavigate();
-  // const snap = useSnapshot(studentData);
-
-  //   const handleUpdate = async () => {
-  //     // console.log(id);
-  //     const updatedStudents = {
-  //       lastName: studentData.lastName,
-  //       firstName: studentData.firstName,
-  //       middleName: studentData.middleName,
-  //       email: studentData.email,
-  //       sex: studentData.sex,
-  //     };
-  //     // console.log(updatedStudents, "Hello, its updated students");
-  //     const res = await fetch("http://localhost:8000/students/" + snap.id, {
-  //       method: "PATCH",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify(updatedStudents),
-  //     });
-  //     if (res.ok) {
-  //       alert("Successfully Updated Student");
-  //     } else {
-  //       alert("Error Occured");
-  //     }
-  //   };
+  const navigate = useNavigate();
+  const id = sessionStorage.getItem("id");
+  let { userId } = useParams();
 
   const fetchStudents = () => {
-    fetch("http://localhost:8000/archive/" + id)
+    fetch("http://localhost:8000/archive/" + userId)
       .then((res) => {
         return res.json();
       })
@@ -60,57 +37,6 @@ const ArchivedStudents = () => {
         alert("An Error Occured : " + err.message);
       });
   };
-
-  //   const storeArchive = async () => {
-  //     await fetch("http://localhost:8000/students/" + id)
-  //       .then((res) => {
-  //         return res.json();
-  //       })
-  //       .then((resp) => {
-  //         studentData.id = resp.id;
-  //         studentData.lastName = resp.lastName;
-  //         studentData.firstName = resp.firstName;
-  //         studentData.middleName = resp.middleName;
-  //         studentData.email = resp.email;
-  //         studentData.sex = resp.sex;
-  //       });
-
-  //     const res = await fetch("http://localhost:8000/archive", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify(studentData),
-  //     });
-  //     if (res.ok) {
-  //       // alert("Successfully Added Student");
-  //     } else {
-  //       alert("Error Occured");
-  //     }
-  //   };
-
-  // const handleDelete = async () => {
-  //   const res = await fetch("http://localhost:8000/archive/" + id, {
-  //     method: "DELETE",
-  //   });
-  //   if (res.ok) {
-  //     alert("Successfully Deleted Student");
-  //   } else {
-  //     alert("Error Occured");
-  //   }
-  // };
-
-  //   const handleSubmit = async () => {
-  //     studentData.id = String(Math.random().valueOf());
-  //     const res = await fetch("http://localhost:8000/students", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify(studentData),
-  //     });
-  //     if (res.ok) {
-  //       alert("Successfully Added Student");
-  //     } else {
-  //       alert("Error Occured");
-  //     }
-  //   };
 
   const handleSearch = () => {
     if (!students) return;
@@ -128,6 +54,11 @@ const ArchivedStudents = () => {
   };
 
   useEffect(() => {
+    if (!id) {
+      navigate("/login");
+      return;
+    }
+
     fetch("http://localhost:8000/archive")
       .then((res) => {
         return res.json();
@@ -225,7 +156,7 @@ const ArchivedStudents = () => {
                   <button
                     onClick={() => {
                       usersData.open3 = false;
-                      id = student?.id;
+                      userId = student?.id;
                       //   storeArchive();
                       // handleDelete();
                       fetchStudents();
@@ -238,7 +169,7 @@ const ArchivedStudents = () => {
                   <button
                     type="submit"
                     onClick={() => {
-                      id = student?.id;
+                      userId = student?.id;
                       //   storeArchive();
                       // handleDelete();
                     }}

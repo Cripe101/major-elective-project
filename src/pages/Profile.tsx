@@ -7,15 +7,15 @@ const Profile = () => {
   const [users, setUsers] = useState<typeof usersData>();
   const snap = useSnapshot(usersData);
   const navigate = useNavigate();
-  const userName = sessionStorage.getItem("userName");
+  const id = sessionStorage.getItem("id");
 
   useEffect(() => {
-    if (!userName) {
+    if (!id) {
       navigate("/login");
       return;
     }
 
-    fetch("http://localhost:8000/users/" + userName)
+    fetch("http://localhost:8000/users/" + id)
       .then((res) => {
         return res.json();
       })
@@ -82,7 +82,7 @@ const Profile = () => {
             <input
               type="text"
               readOnly
-              value={users?.id}
+              value={users?.userName}
               className="border bg-blue-50 border-green-500 h-[35px] w-[100%] py-1 shadow-md rounded-md font-bold text-center overflow-hidden px-1 "
             />
           </span>

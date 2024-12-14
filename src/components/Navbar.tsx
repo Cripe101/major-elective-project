@@ -3,7 +3,7 @@ import { usersData } from "../store/UsersData";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const userName = sessionStorage.getItem("userName");
+  // const id = sessionStorage.getItem("id");
   return (
     <div className="flex justify-between py-3 border-b fixed top-0 left-0 z-50 w-full bg-white">
       <section>
@@ -48,8 +48,7 @@ const Navbar = () => {
 
         <button
           onClick={() => {
-            sessionStorage.removeItem("userName");
-            usersData.id = "";
+            sessionStorage.removeItem("id");
             usersData.password = "";
             navigate("/login");
           }}

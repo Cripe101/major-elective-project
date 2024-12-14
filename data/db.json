@@ -1,10 +1,11 @@
 {
   "users": [
     {
-      "id": "cripe101",
-      "password": "$2a$10$yFv/4..u.XkzhX7hL9tyxuQaXMid04T/PEsTFE1ZYpH4h/Xki8rF.",
+      "id": "8253",
+      "userName": "cripe",
+      "password": "$2a$10$kfV1qDDyTYFcUbqpbQOrVOlE8jAZWt1smk.Tp8EbNtTcMjwVjsBci",
       "newPassword": "",
-      "confirmPassword": "MM1008",
+      "confirmPassword": "Mhegz@1008",
       "recoveryPass": "Anime",
       "firstName": "Mheg Ryan",
       "middleName": "Tolibao",
@@ -18,15 +19,7 @@
   ],
   "students": [
     {
-      "id": "0.513593953551402",
-      "firstName": "Mheg Ryan",
-      "middleName": "Tolibao",
-      "lastName": "Limpangog",
-      "sex": "Male",
-      "email": "mhegryanlimpangog58@gmail.com"
-    },
-    {
-      "id": "0.3670409663774803",
+      "id": "0.5556073036226696",
       "firstName": "Mac Alley",
       "middleName": "Tolibao",
       "lastName": "Limpangog",
@@ -34,25 +27,15 @@
       "email": "macalley12@gmail.com"
     },
     {
-      "id": "0.5210809332453816",
-      "firstName": "Mark Jasper",
-      "middleName": "",
-      "lastName": "Rojas",
-      "sex": "Male",
-      "email": "mark@gmail.com"
-    },
-    {
-      "id": "0.24581869620642594",
+      "id": "0.2960383600682861",
       "firstName": "Jarod",
       "middleName": "Mauring",
       "lastName": "Melecio",
       "sex": "Male",
       "email": "me@gmail.com"
-    }
-  ],
-  "archive": [
+    },
     {
-      "id": "0.29696048633849537",
+      "id": "0.2981892109839164",
       "firstName": "Mark Jasper",
       "middleName": "",
       "lastName": "Rojas",
@@ -60,31 +43,33 @@
       "email": "mark@gmail.com"
     },
     {
-      "id": "0.8273739148567116",
-      "firstName": "Cripe",
+      "id": "0.6691734411022405",
+      "firstName": "Louise",
+      "middleName": "",
+      "lastName": "Awit",
+      "sex": "Male",
+      "email": "louise@gmail.com"
+    },
+    {
+      "id": "0.648286022112796",
+      "firstName": "Mheg Ryan",
       "middleName": "Tolibao",
       "lastName": "Limpangog",
       "sex": "Male",
-      "email": "cripeguild1001.1001@gmail.com"
-    },
+      "email": "mhegryanlimpangog58@gmail.com"
+    }
+  ],
+  "archive": [
     {
-      "id": "0.26190339874593715",
-      "firstName": "Cripe",
-      "middleName": "Tolibao",
-      "lastName": "Limpangog",
+      "id": "0.28886535215155407",
+      "firstName": "Louise",
+      "middleName": "",
+      "lastName": "Awit",
       "sex": "Male",
-      "email": "cripeguild1001.1001@gmail.com"
+      "email": "louise@gmail.com"
     },
     {
-      "id": "0.6654282955952096",
-      "firstName": "Aika",
-      "middleName": "R",
-      "lastName": "Sususco",
-      "sex": "Female",
-      "email": "aika123@gmail.com"
-    },
-    {
-      "id": "0.9602381664632647",
+      "id": "0.0007262430811838527",
       "firstName": "Mheg Ryan",
       "middleName": "Tolibao",
       "lastName": "Limpangog",

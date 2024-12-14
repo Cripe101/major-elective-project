@@ -10,15 +10,15 @@ const UpdateProfile = () => {
 
   const [users, setUsers] = useState<typeof usersData>();
   const [loading, setLoading] = useState(true);
-  const userName = sessionStorage.getItem("userName");
+  const id = sessionStorage.getItem("id");
 
   useEffect(() => {
-    if (!userName) {
+    if (!id) {
       navigate("/login");
       return;
     }
 
-    fetch("http://localhost:8000/users/" + userName)
+    fetch("http://localhost:8000/users/" + id)
       .then((res) => {
         return res.json();
       })
@@ -29,7 +29,7 @@ const UpdateProfile = () => {
           usersData.lastName = resp.lastName;
           usersData.firstName = resp.firstName;
           usersData.middleName = resp.middleName;
-          usersData.id = resp.id;
+          usersData.userName = resp.userName;
           usersData.email = resp.email;
           usersData.phoneNum = resp.phoneNum;
 
@@ -59,7 +59,7 @@ const UpdateProfile = () => {
       // console.log("This the Data", users);
 
       const updatedUser = {
-        id: user.id,
+        userName: user.userName,
         password: hashedPassword,
         firstName: user.firstName,
         lastName: user.lastName,
@@ -68,16 +68,16 @@ const UpdateProfile = () => {
         email: user.email,
       };
 
-      fetch(`http://localhost:8000/users/${users.id}`, {
+      fetch(`http://localhost:8000/users/` + id, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedUser),
       })
         .then((res) => {
           if (res.ok) {
-            sessionStorage.removeItem("userName");
+            sessionStorage.removeItem("id");
             usersData.password = "";
-            usersData.id = "";
+            usersData.userName = "";
             alert("Profile updated successfully.");
             navigate("/login");
           } else {
@@ -168,9 +168,9 @@ const UpdateProfile = () => {
             <input
               type="text"
               required
-              value={user.id}
+              value={user.userName}
               onChange={(e) => {
-                usersData.id = e.target.value;
+                usersData.userName = e.target.value;
               }}
               className="border bg-blue-50 border-green-500 h-[35px] w-[100%] py-1 shadow-md rounded-md font-bold text-center overflow-hidden px-1 "
             />

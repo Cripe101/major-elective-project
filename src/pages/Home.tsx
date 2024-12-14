@@ -5,9 +5,10 @@ import Students from "../components/students/Students";
 const Home = () => {
   const navigate = useNavigate();
 
-  const userName = sessionStorage.getItem("userName");
+  const id = sessionStorage.getItem("id");
+
   useEffect(() => {
-    if (!userName) {
+    if (!id) {
       navigate("/login");
       return;
     }
